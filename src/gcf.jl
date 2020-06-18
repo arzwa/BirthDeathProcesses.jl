@@ -71,6 +71,7 @@ end
 # --------------
 # samples:          10000
 # evals/sample:     1
+
 # (2) take first nmax entries
 # BenchmarkTools.Trial:
 # memory estimate:  38.43 KiB
@@ -88,7 +89,7 @@ end
     convergents(gcf::ContinuedFraction, k::Int)
 
 Compute the convergents up to index `k`. Returns a (k × 2) matrix with
-the first and second columns the umerator and denominator respectively.
+the first and second columns the numerator and denominator respectively.
 """
 function convergents(gcf::ContinuedFraction{T}, k::Int) where T
     AB = zeros(Complex, k, 2)
