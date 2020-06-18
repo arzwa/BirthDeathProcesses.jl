@@ -33,7 +33,7 @@ rand(tr)
 ```
 
 ```
-4
+22
 ```
 
 General BDP
