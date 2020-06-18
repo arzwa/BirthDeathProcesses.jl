@@ -4,6 +4,9 @@ authors = ["arzwa <arzwa@psb.vib.ugent.be>"]
 version = "0.1.0"
 
 [deps]
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 InverseLaplace = "e24f45a5-4790-5a38-8b2c-33d770a4e70f"
 Lazy = "50d2b5c4-7a5e-59d5-8109-a42b560f39c0"
+Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
