@@ -27,4 +27,4 @@ gbdp = GeneralBDP(λ, μ)
 
 # as noted above, the general BDPs need some work to get more efficient (and robust). The papers from Crawford & Suchard (2012); Crawford, Minin & Suchard (2014) and Ho et al. (2018) should be helpful.
 using Literate
-Literate.markdown(@__FILE__, joinpath(@__DIR__, ".."), execute=true) #src
+Literate.markdown(@__FILE__, joinpath(@__DIR__, ".."), execute=true, documenter=false) #src
