@@ -33,7 +33,7 @@ rand(tr)
 ```
 
 ```
-7
+6
 ```
 
 General BDP
@@ -42,7 +42,7 @@ General BDP
 λ = (k)->0.3k^2*exp(-1.2*k)
 μ = (k)->0.3k
 gbdp = GeneralBDP(λ, μ)
-@time tp(gbdp, 19, 27, 1.0)
+tp(gbdp, 19, 27, 1.0)
 ```
 
 ```
@@ -52,7 +52,7 @@ gbdp = GeneralBDP(λ, μ)
 as noted above, the general BDPs need some work to get more efficient (and robust). The papers from Crawford & Suchard (2012); Crawford, Minin & Suchard (2014) and Ho et al. (2018) should be helpful.
 
 ```julia
-using Literate
+using Literate # src
 ```
 
 ---
