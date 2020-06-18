@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/arzwa/BirthDeathProcesses.jl.svg?branch=master)](https://travis-ci.com/arzwa/BirthDeathProcesses.jl)
+
 # (General) birth death processes
 
 This is a module with some functionalities related to (general) birth-death processes. A birth-death process `X(t)` is a continuous-time Markov process on the non-negative integers where the only allowed transitions are the birth of a new 'particle' and 'death' of an extant particle. The transition probabilities are defined as `P(X(t+Δt) = i+1|X(t)=i) = λᵢΔt + o(Δt)` and `P(X(t+Δt)=i-1|X(t)=i) = μᵢΔt + o(Δt)`. An important special case is where `λᵢ = iλ` and `μᵢ = iμ`, in which case the process is called a linear birth-death process.
@@ -33,7 +35,7 @@ rand(tr)
 ```
 
 ```
-22
+4
 ```
 
 General BDP
@@ -54,3 +56,4 @@ as noted above, the general BDPs need some work to get more efficient (and robus
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
+
