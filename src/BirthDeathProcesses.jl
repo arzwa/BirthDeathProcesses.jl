@@ -7,6 +7,7 @@ module BirthDeathProcesses  # AKA BDP
     export GeneralBDP, LinearBDP, Transient, tp, pgf, pdf, logpdf
 
     abstract type BDP{T} end
+    abstract type Transient <: DiscreteUnivariateDistribution end
 
     include("gcf.jl")     # continued fractions
     include("gbdp.jl")    # general BDP

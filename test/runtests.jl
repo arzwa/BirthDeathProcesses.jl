@@ -41,7 +41,7 @@ Random.seed!(19081994)
         for i=1:100
             λ = exp(randn())
             μ = exp(log(λ) + randn()/2)
-            d = Transient(LinearBDP(λ, μ), rand(), 1)
+            d = LinearBDP(λ, μ)(rand(), 1)
             @test isapprox(sum(pdf.(d, 0:100)), one(λ), atol=1e-3)
         end
     end

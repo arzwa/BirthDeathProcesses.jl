@@ -8,9 +8,10 @@ struct LinearBDP{T} <: BDP{T}
     μ::T
 end
 
-function getαβ(p::LinearBDP, t)
-    α = getα(p.λ, p.μ, t)
-    α, (p.λ/p.μ)*α
+getαβ(p::LinearBDP, t) = getαβ(p.λ, p.μ, t)
+function getαβ(λ, μ, t)
+    α = getα(λ, μ, t)
+    α, (λ/μ)*α
 end
 
 function getα(λ, μ, t)
@@ -43,41 +44,43 @@ _bin(n, k) =
 _ξ(i, j, k, α, β) = _bin(i, k)*_bin(i+j-k-1,i-1)*α^(i-k)*β^(j-k)*(one(α)-α-β)^k
 
 """
-    Transient(process, t, [a=1])
+    TransientLinearBDP(process, t, [a=1])
 
 Construct the transient distribution for the process at time `t`
 with initial value `a`.
 """
-struct Transient{T,P<:BDP{T}} <: DiscreteUnivariateDistribution
-    process::P
+struct TransientLinearBDP{T} <: Transient
+    λ::T
+    μ::T
     a::Int64
     t::T
     α::T
     β::T
-    Transient(p::BDP{T}, t::T, a=1) where T =
-        new{T,typeof(p)}(p, a, t, getαβ(p, t)...)
+    TransientLinearBDP(λ::T, μ::T, t::T, a=1) where T =
+        new{T}(λ, μ, a, t, getαβ(λ, μ, t)...)
 end
 
+(p::LinearBDP)(t, a=1) = TransientLinearBDP(p.λ, p.μ, t, a)
+
 # sum of `a` shifted geometric rv's
-function Base.rand(d::Transient{T,LinearBDP{T}}) where T
+function Base.rand(d::TransientLinearBDP{T}) where T
     mapreduce((_)->rand() < d.α ? 0 : rand(Geometric(d.β)) + 1, +, 1:d.a)
 end
 
-function Distributions.pdf(d::Transient{T,LinearBDP{T}}, x::Int) where T
+function Distributions.pdf(d::TransientLinearBDP{T}, x::Int) where T
     x == d.a == zero(x) && return one(t)
     tp(d.a, x, d.α, d.β)
 end
 
-Distributions.logpdf(d::Transient, x) = log(pdf(d))
+Distributions.logpdf(d::TransientLinearBDP, x) = log(pdf(d))
 
 """
     pgf(::Transient{LinearBDP}, s)
 
 The probability generating function for the linear BDP.
 """
-function pgf(d::Transient{T,LinearBDP{T}}, s) where T
-    @unpack process, t, a = d
-    @unpack λ, μ = process
+function pgf(d::TransientLinearBDP{T}, s) where T
+    @unpack λ, μ, t, a = d
     x = t*(μ - λ)
     ρ = exp(x)
     f = isapprox(x, zero(x), atol=ΛMATOL) ?

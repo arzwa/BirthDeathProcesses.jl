@@ -14,7 +14,7 @@ The methods for general BDPs are not yet very efficiently implemented.
 using BirthDeathProcesses
 ```
 
-Linear BDP
+### Linear BDP
 
 ```julia
 lbdp = LinearBDP(0.3, 0.2)
@@ -28,17 +28,46 @@ tp(lbdp, 0.2, 6, 9)  # transition probability
 Transient distribution for the linear BDP for `t=2` and `X₀=2`
 
 ```julia
-tr = Transient(LinearBDP(0.3, 0.2), 1.2, 2)
-pdf.(tr, 0:10)  # probabilities to end in states 0,1,...,10
-pgf(tr, 0.)  # the extinction probability == pgf evaluated at 0
-rand(tr)
+tbdp = lbdp(2., 2)
 ```
 
 ```
-4
+BirthDeathProcesses.TransientLinearBDP{Float64}(λ=0.3, μ=0.2, a=2, t=2.0, α=0.26607578096471346, β=0.3991136714470701)
 ```
 
-General BDP
+This acts like a distribution from `Distributions.jl`
+
+```julia
+pdf.(tbdp, 0:10)  # probabilities to end in states 0,1,...,10
+```
+
+```
+11-element Array{Float64,1}:
+ 0.07079632121598217
+ 0.23468151522042963
+ 0.2881500371272334
+ 0.1926264156371718
+ 0.1078597561048541
+ 0.05541281292948958
+ 0.02705085606317386
+ 0.012765930525135248
+ 0.005881137338864456
+ 0.00266097756552092
+ 0.0011872485532721843
+```
+
+The probability generating function and a sampler are implemented for the linear BDP
+
+```julia
+pgf(tbdp, 0.)  # the extinction probability == pgf evaluated at 0
+rand(tbdp)
+```
+
+```
+8
+```
+
+### General BDP
 
 ```julia
 λ = (k)->0.3k^2*exp(-1.2*k)

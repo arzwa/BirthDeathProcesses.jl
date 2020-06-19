@@ -11,17 +11,21 @@
 # ## Example
 using BirthDeathProcesses
 
-# Linear BDP
+# ### Linear BDP
 lbdp = LinearBDP(0.3, 0.2)
 tp(lbdp, 0.2, 6, 9)  # transition probability
 
 # Transient distribution for the linear BDP for `t=2` and `X₀=2`
-tr = Transient(LinearBDP(0.3, 0.2), 1.2, 2)
-pdf.(tr, 0:10)  # probabilities to end in states 0,1,...,10
-pgf(tr, 0.)  # the extinction probability == pgf evaluated at 0
-rand(tr)
+tbdp = lbdp(2., 2)
 
-# General BDP
+# This acts like a distribution from `Distributions.jl`
+pdf.(tbdp, 0:10)  # probabilities to end in states 0,1,...,10
+
+# The probability generating function and a sampler are implemented for the linear BDP
+pgf(tbdp, 0.)  # the extinction probability == pgf evaluated at 0
+rand(tbdp)
+
+# ### General BDP
 λ = (k)->0.3k^2*exp(-1.2*k)
 μ = (k)->0.3k
 gbdp = GeneralBDP(λ, μ)
