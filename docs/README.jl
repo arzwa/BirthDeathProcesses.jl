@@ -26,11 +26,25 @@ pgf(tbdp, 0.)  # the extinction probability == pgf evaluated at 0
 rand(tbdp)
 
 # ### General BDP
+
+# There are two implementations, `GeneralBDP` is a fast implementation which uses a bound on the continued fraction (default at 100 terms) and uses Arrays as data structures:
 λ = (k)->0.3k^2*exp(-1.2*k)
 μ = (k)->0.3k
 gbdp = GeneralBDP(λ, μ)
-tp(gbdp, 19, 27, 1.0)
+tp(gbdp, 1.0, 19, 27)
 
-# as noted above, the general BDPs need some work to get more efficient (and robust). The papers from Crawford & Suchard (2012); Crawford, Minin & Suchard (2014) and Ho et al. (2018) should be helpful.
+# If one exceeds the depth of the BDP, an error is raised
+try tp(gbdp, 1.0, 101, 101); catch ex @show ex; end
+
+# So we should increase the BDP depth
+gbdp = GeneralBDP(λ, μ, 200)
+@time tp(gbdp, 1.0, 101, 102)
+
+# There is another implementation using Lazy lists, which is more elegant but vastly less efficient
+import BirthDeathProcesses: LazyGeneralBDP
+gbdp = LazyGeneralBDP(λ, μ)
+@time tp(gbdp, 1.0, 101, 102)
+
+
 using Literate #src
 Literate.markdown(@__FILE__, joinpath(@__DIR__, ".."), execute=true, documenter=false) #src

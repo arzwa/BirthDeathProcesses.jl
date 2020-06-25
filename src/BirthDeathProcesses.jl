@@ -9,7 +9,9 @@ module BirthDeathProcesses  # AKA BDP
     abstract type BDP{T} end
     abstract type Transient <: DiscreteUnivariateDistribution end
 
-    include("gcf.jl")     # continued fractions
+    include("gcflazy.jl")     # continued fractions
+    include("gcfarray.jl")     # continued fractions
     include("gbdp.jl")    # general BDP
+    include("gbdplazy.jl")    # general BDP
     include("linear.jl")  # linear BDP
 end # module
